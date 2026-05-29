@@ -4,6 +4,7 @@ import cl.karubag.ruta.dto.RutaDTO;
 import cl.karubag.ruta.model.EstadoRuta;
 import cl.karubag.ruta.model.Ruta;
 import cl.karubag.ruta.repository.RutaRepository;
+import cl.karubag.ruta.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -41,12 +42,12 @@ public class RutaService {
     public RutaDTO obtenerRutaDelDia(Long operadorId) {
         return rutaRepository.findByOperadorIdAndFecha(operadorId, LocalDate.now())
                 .stream().map(this::toDTO).findFirst()
-                .orElseThrow(() -> new RuntimeException("No hay ruta programada para hoy"));
+                .orElseThrow(() -> new ResourceNotFoundException("No hay ruta programada para hoy"));
     }
 
     public RutaDTO obtenerPorId(Long id) {
         Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ruta no encontrada con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ruta no encontrada con id: " + id));
         return toDTO(ruta);
     }
 
@@ -56,7 +57,7 @@ public class RutaService {
 
     public RutaDTO actualizar(Long id, RutaDTO dto) {
         Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ruta no encontrada con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ruta no encontrada con id: " + id));
         ruta.setOperadorId(dto.getOperadorId());
         ruta.setFecha(dto.getFecha());
         ruta.setTotalParadas(dto.getTotalParadas());
@@ -67,14 +68,14 @@ public class RutaService {
 
     public RutaDTO iniciar(Long id) {
         Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ruta no encontrada con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ruta no encontrada con id: " + id));
         ruta.setEstado(EstadoRuta.EN_CURSO);
         return toDTO(rutaRepository.save(ruta));
     }
 
     public RutaDTO completar(Long id) {
         Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ruta no encontrada con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ruta no encontrada con id: " + id));
         ruta.setEstado(EstadoRuta.COMPLETADA);
         return toDTO(rutaRepository.save(ruta));
     }
