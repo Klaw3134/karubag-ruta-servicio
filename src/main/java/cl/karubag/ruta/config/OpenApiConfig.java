@@ -11,6 +11,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Ruta Servicio API")
                         .version("1.0")
-                        .description("API de gestión de rutas Karübag"));
+                        .description("API de gestion de rutas Karübag"));
     }
 }

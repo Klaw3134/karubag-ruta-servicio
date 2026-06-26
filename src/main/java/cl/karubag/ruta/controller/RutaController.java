@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Tag(name = "Rutas", description = "Gestión de rutas de operadores Karübag")
+@Tag(name = "Rutas", description = "Gestion de rutas de operadores Karübag")
 @RestController
 @RequestMapping("/api/rutas")
 public class RutaController {
@@ -36,16 +36,16 @@ public class RutaController {
         return ResponseEntity.ok(rutaService.listarTodos());
     }
 
-    @Operation(summary = "Listar por operador", description = "Retorna rutas de un operador específico")
+    @Operation(summary = "Listar por operador", description = "Retorna rutas de un operador especifico")
     @ApiResponse(responseCode = "200", description = "Lista de rutas del operador")
     @GetMapping("/operador/{operadorId}")
     public ResponseEntity<List<RutaDTO>> listarPorOperador(@PathVariable Long operadorId) {
         return ResponseEntity.ok(rutaService.listarPorOperador(operadorId));
     }
 
-    @Operation(summary = "Obtener ruta del día", description = "Retorna la ruta programada para hoy del operador")
+    @Operation(summary = "Obtener ruta del dia", description = "Retorna la ruta programada para hoy del operador")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Ruta del día encontrada"),
+        @ApiResponse(responseCode = "200", description = "Ruta del dia encontrada"),
         @ApiResponse(responseCode = "404", description = "No hay ruta programada para hoy")
     })
     @GetMapping("/operador/{operadorId}/hoy")
@@ -53,7 +53,7 @@ public class RutaController {
         return ResponseEntity.ok(rutaService.obtenerRutaDelDia(operadorId));
     }
 
-    @Operation(summary = "Listar por fecha", description = "Retorna rutas de una fecha específica")
+    @Operation(summary = "Listar por fecha", description = "Retorna rutas de una fecha especifica")
     @ApiResponse(responseCode = "200", description = "Lista de rutas por fecha")
     @GetMapping("/fecha/{fecha}")
     public ResponseEntity<List<RutaDTO>> listarPorFecha(
